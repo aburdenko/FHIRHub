@@ -1,0 +1,80 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json", 
+    "contentVersion": "1.0.0.0",
+    "location": "East US 2",
+    "properties": {
+        "sku": {
+            "name": "standard"
+        },
+        "EventsOutOfOrderMaxDelayInSeconds": 5,
+        "EventsOutOfOrderPolicy": "Adjust",
+        "inputs": [
+            {
+                "name": "input",
+                "properties": {
+                    "type": "stream",
+                    "serialization": {
+                        "type": "JSON",
+                        "properties": {
+                            "encoding": "UTF8"
+                        }
+                    },
+                    "datasource": {
+                        "type": "Microsoft.ServiceBus/EventHub",
+                        "properties": {
+                            "serviceBusNamespace": "phDevCcdaServiceBus",
+                            "sharedAccessPolicyName": "Manage",
+                            "sharedAccessPolicyKey": "QFZ1AoNi53gCWnKjtbRalaM60ENVd8Up27ABE7M5Je8=",
+                            "eventHubName": "phdevcccdaeventhub",
+                            "consumerGroupName": "dwmessageconsumer"
+                        }
+                    }
+                }
+            }
+        ],
+        "transformation": {
+            "name": "CarePlan",
+            "properties": {
+                "streamingUnits": 1,
+                "query": "
+
+                select i.managingOrganization.id
+                OrgId,
+                i.id PatientId,
+                b.id CarePlanId,
+                case when
+                b.Status =
+                'completed' then
+                1 else
+                0 end
+                IsCompliant,
+                System.Timestamp Timestamp
+                from input
+                i join
+                blob b
+                on i.id
+                = b.patient.reference
+                CROSS APPLY
+                GetElements(b.goal) goal
+                where i.resourceType
+                = 'Patient'
+            },
+            "outputs": [
+                {
+                    "name": "sql",
+                    "properties": {
+                        "datasource": {
+                            "type": "Microsoft.Sql/Server/Database",
+                            "properties": {
+                                "server": "falcondev.database.windows.net",
+                                "database": "FalconDB",
+                                "table": "Dashboard.CarePlan",
+                                "user": "Medventive",
+                                "password": "Systems0"
+                            }
+                        }
+                    }
+                }
+            ]
+        }
+    }
