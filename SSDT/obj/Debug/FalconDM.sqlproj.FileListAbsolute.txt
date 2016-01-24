@@ -1,9 +1,0 @@
-C:\OneDrive\Projects\Mckesson\FalconDataMart\FalconDM\bin\Debug\FalconDM.dacpac
-C:\OneDrive\Projects\Mckesson\FalconDataMart\FalconDM\bin\Debug\FalconDM.dll
-C:\OneDrive\Projects\Mckesson\FalconDataMart\FalconDM\bin\Debug\FalconDM.pdb
-C:\OneDrive\Projects\Mckesson\FalconDataMart\FalconDM\obj\Debug\FalconDM.dll
-C:\OneDrive\Projects\Mckesson\FalconDataMart\FalconDM\obj\Debug\FalconDM.pdb
-C:\OneDrive\Projects\Mckesson\FalconDataMart\FalconDM\obj\Debug\Model.xml
-C:\OneDrive\Projects\Mckesson\FalconDataMart\FalconDM\obj\Debug\refactor.xml
-C:\OneDrive\Projects\Mckesson\FalconDataMart\FalconDM\obj\Debug\postdeploy.sql
-C:\OneDrive\Projects\Mckesson\FalconDataMart\FalconDM\obj\Debug\predeploy.sql
